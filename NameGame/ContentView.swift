@@ -8,14 +8,20 @@
 import SwiftUI
 
 struct ContentView: View {
+    @StateObject private var profileViewModel = ProfileViewModel()
+    @StateObject private var gameViewModel = GameViewModel()
+    
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        Group {
+            switch gameViewModel.currentScreen {
+            case .menu:
+                MenuView(profileViewModel: profileViewModel, gameViewModel: gameViewModel)
+            case .game:
+                GameView(gameViewModel: gameViewModel)
+            case .gameOver:
+                EmptyView() // No longer needed since we use alert
+            }
         }
-        .padding()
     }
 }
 
